@@ -3,8 +3,8 @@ PY ?= python3
 .PHONY: test progress
 
 # make test            every exercise
-# make test EX=3.2     one exercise
-# make test EX=3       one chapter
+# make test EX=13.2    one exercise
+# make test EX=13      one chapter
 test:
 ifeq ($(EX),)
 	$(PY) -m pytest -q
