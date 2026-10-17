@@ -2,7 +2,7 @@
 
 <!-- Written by tools/progress.py on every push. Edits here are overwritten. -->
 
-**0 of 282 exercises pass (0%).** Last run 2026-10-17.
+**0 of 282 exercises pass (0%).** Last run 2026-10-17 at commit a364cbe.
 
 ## Arrays, sets and searching
 
