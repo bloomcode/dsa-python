@@ -84,3 +84,22 @@ def find_any(text, needles):
 def longest_repeat(text):
     raise NotImplementedError
 # ==== END
+
+
+# ==== EX 43.9 | The prefix table | Practice
+# PROMPT: Write `prefix_table(pattern)` that returns a list where entry `i` is the length of the longest proper prefix of `pattern[:i + 1]` that is also its suffix. Keep the current match length `k`; on a mismatch fall back to `table[k - 1]` instead of starting over.
+# EXAMPLE: `"abacabab"` -> `[0, 0, 1, 0, 1, 2, 3, 2]`
+# BIGO: O(M) time and space: `k` rises by at most one per character and every fall-back lowers it, so the total work is linear.
+def prefix_table(pattern):
+    raise NotImplementedError
+# ==== END
+
+
+# ==== EX 43.10 | Search with the prefix table | Practice
+# PROMPT: Write `prefix_search(text, pattern)` that returns every start index of `pattern` (non-empty) in `text`, overlaps included, in O(N + M): build the prefix table of `pattern` (43.9), then walk `text` once, keeping the matched length `k` and falling back through the table on a mismatch or after a full match.
+# EXAMPLE: `"abababca", "abab"` -> `[0, 2]`
+# BIGO: O(N + M) worst case, O(M) space: the text pointer never moves back, and the table says how much of the match survives a mismatch.
+# NOTE: Unlike Rabin-Karp (43.4), this is linear even in the worst case and needs no hashing or verification.
+def prefix_search(text, pattern):
+    raise NotImplementedError
+# ==== END

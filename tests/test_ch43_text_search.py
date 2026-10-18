@@ -1,7 +1,7 @@
 import random
 import string
-from ch43_text_search import (brute_force_search, find_any, longest_repeat, PRIME, rabin_karp,
-                              rabin_karp_monte_carlo, rolling_hashes, spurious_hits, window_sums)
+from ch43_text_search import (brute_force_search, find_any, longest_repeat, prefix_search, prefix_table, PRIME,
+                              rabin_karp, rabin_karp_monte_carlo, rolling_hashes, spurious_hits, window_sums)
 
 
 def all_matches(text, needle):
@@ -58,3 +58,13 @@ def test_ex_43_7():
 
 def test_ex_43_8():
     assert longest_repeat("banana") == "ana" and longest_repeat("abcd") == "" and longest_repeat("aaaa") == "aaa"
+
+
+def test_ex_43_9():
+    assert prefix_table("abacabab") == [0, 0, 1, 0, 1, 2, 3, 2] and prefix_table("aaaa") == [0, 1, 2, 3] and prefix_table("") == []
+    assert prefix_table("abcd") == [0, 0, 0, 0] and prefix_table("aabaaab") == [0, 1, 0, 1, 2, 2, 3]
+
+
+def test_ex_43_10():
+    assert prefix_search("abababca", "abab") == [0, 2] and prefix_search("aaaa", "aa") == [0, 1, 2] and prefix_search("abc", "d") == []
+    assert prefix_search("ab", "abc") == [] and prefix_search("xabcabcx", "abcx") == [4] and prefix_search("", "a") == []

@@ -1,6 +1,6 @@
 from ch71_recursion import (collapse_runs, collatz_steps, dice_ways, digit_count, digit_sum, factorial, gcd,
-                            headcount, is_palindrome_rec, longest_word, max_depth, paren_strings, power,
-                            running_totals, subsets, sum_recursive, tilings, to_binary)
+                            headcount, is_palindrome_rec, last_standing, longest_word, max_depth, paren_strings,
+                            power, running_totals, subsets, sum_recursive, tilings, to_binary)
 
 
 def test_ex_71_1():
@@ -86,3 +86,8 @@ def test_ex_71_17():
 def test_ex_71_18():
     assert sorted(map(sorted, subsets([1, 2]))) == [[], [1], [1, 2], [2]]
     assert len(subsets([1, 2, 3, 4])) == 16
+
+
+def test_ex_71_19():
+    assert last_standing(5, 2) == 3 and last_standing(1, 3) == 1 and last_standing(7, 3) == 4
+    assert last_standing(6, 1) == 6 and last_standing(10, 2) == 5 and last_standing(2, 2) == 1

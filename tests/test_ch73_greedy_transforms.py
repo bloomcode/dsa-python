@@ -1,5 +1,7 @@
-from ch73_greedy_transforms import (can_reach_end, has_pair_with_difference, lone_value, longest_unique_run,
-                                    max_meetings, RangeSum, rooms_needed, top_k_frequent, window_with_sum)
+from ch73_greedy_transforms import (best_schedule_profit, can_reach_end, can_take_photo, fewest_rewards,
+                                    has_pair_with_difference, least_total_waiting, lone_value, longest_unique_run,
+                                    loop_start, max_meetings, pair_finish_time, RangeSum, rooms_needed,
+                                    stable_matching, tandem_total, top_k_frequent, window_with_sum)
 
 
 def test_ex_73_1():
@@ -46,3 +48,49 @@ def test_ex_73_8():
 def test_ex_73_9():
     assert longest_unique_run('abcadbe') == 5 and longest_unique_run('aaaa') == 1 and longest_unique_run('') == 0
     assert longest_unique_run('abba') == 2 and longest_unique_run('xyz') == 3 and longest_unique_run('tmmzuxt') == 5
+
+
+def test_ex_73_10():
+    assert [least_total_waiting(v) for v in ([3, 2, 1, 2, 6], [], [5], [4, 1], [2, 2, 2])] == [17, 0, 0, 1, 6]
+
+
+def test_ex_73_11():
+    assert [pair_finish_time(v) for v in ([5, 2, 1, 6, 4, 4], [1, 2], [3, 3, 3, 3], [1, 9, 2, 8])] == [8, 3, 6, 10]
+
+
+def test_ex_73_12():
+    assert can_take_photo([5, 8, 1, 3, 4], [6, 9, 2, 4, 5]) and not can_take_photo([1, 2], [1, 3])
+    assert not can_take_photo([3], [3]) and can_take_photo([6, 5], [4, 4]) and not can_take_photo([1, 9], [5, 5])
+
+
+def test_ex_73_13():
+    r, b = [5, 5, 3, 9, 2], [3, 6, 7, 2, 1]
+    assert tandem_total(r, b, True) == 32 and tandem_total(r, b, False) == 25 and tandem_total([1], [1], True) == 1
+    assert tandem_total([1, 4], [5, 2], True) == 9 and tandem_total([1, 4], [5, 2], False) == 7
+
+
+def test_ex_73_14():
+    assert loop_start([1, 5, 3, 3, 1], [3, 2, 4, 1, 1]) == 1 and loop_start([2, 2], [3, 3]) == -1
+    assert loop_start([3], [2]) == 0 and loop_start([1, 2, 3], [2, 3, 1]) == 2
+
+
+def test_ex_73_15():
+    assert [fewest_rewards(v) for v in ([4, 2, 6, 3, 3, 1], [], [5], [1, 2, 3], [3, 3, 3], [1, 3, 2], [5, 4, 3, 2, 1])] == [9, 0, 1, 6, 3, 4, 15]
+
+
+def test_ex_73_16():
+    assert best_schedule_profit([[2, 50], [1, 10], [2, 40], [1, 30], [3, 20]]) == 110 and best_schedule_profit([]) == 0
+    assert best_schedule_profit([[1, 5], [1, 9]]) == 9 and best_schedule_profit([[3, 1], [3, 2], [3, 3], [3, 4]]) == 9
+
+
+def test_ex_73_17():
+    P, A = [[0, 1, 2], [0, 2, 1], [1, 0, 2]], [[1, 0, 2], [0, 1, 2], [0, 1, 2]]
+    assert stable_matching(P, A) == [1, 0, 2] and stable_matching([[0]], [[0]]) == [0]
+    assert stable_matching([[0, 1], [0, 1]], [[1, 0], [1, 0]]) == [1, 0]
+    P = [[2, 0, 1, 3], [1, 2, 0, 3], [0, 1, 3, 2], [2, 3, 0, 1]]
+    A = [[3, 1, 0, 2], [0, 2, 3, 1], [1, 0, 3, 2], [2, 3, 1, 0]]
+    match = stable_matching(P, A)
+    partner = {a: p for p, a in enumerate(match)}
+    for p in range(4):
+        for a in P[p][:P[p].index(match[p])]:
+            assert A[a].index(partner[a]) < A[a].index(p)

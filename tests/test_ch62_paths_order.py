@@ -1,4 +1,5 @@
-from ch62_paths_order import dijkstra, shortest_path, topological_order
+from ch62_paths_order import (bellman_ford, dijkstra, grid_path_length, has_profitable_loop, shortest_path,
+                              topological_order)
 
 
 def test_ex_62_1():
@@ -19,3 +20,22 @@ def test_ex_62_3():
     deps = {'wake': ['shower', 'coffee'], 'shower': ['dress'], 'coffee': ['dress'], 'dress': []}
     assert topological_order(deps) == ['wake', 'shower', 'coffee', 'dress']
     assert topological_order({'a': ['b'], 'b': ['a']}) is None
+
+
+def test_ex_62_4():
+    assert bellman_ford(4, [[0, 1, 4], [0, 2, 1], [2, 1, -2], [1, 3, 1]], 0) == [0, -1, 1, 0]
+    assert bellman_ford(3, [[0, 1, 5]], 0) == [0, 5, float("inf")] and bellman_ford(1, [], 0) == [0]
+    assert bellman_ford(3, [[0, 1, 1], [1, 2, -1], [2, 1, -1]], 0) is None
+    assert bellman_ford(3, [[1, 2, -1], [2, 1, -1]], 0) == [0, float("inf"), float("inf")]
+
+
+def test_ex_62_5():
+    assert has_profitable_loop([[1, 0.9, 0.8], [1.2, 1, 0.7], [1.3, 1.4, 1]]) and not has_profitable_loop([[1, 0.5], [1.9, 1]])
+    assert not has_profitable_loop([[1, 2], [0.5, 1]]) and not has_profitable_loop([[1]])
+    assert has_profitable_loop([[1, 2, 0.1], [0.4, 1, 3], [0.2, 0.1, 1]])
+
+
+def test_ex_62_6():
+    grid = ["....#", ".##.#", "....."]
+    assert grid_path_length(grid, (0, 0), (2, 4)) == 6 and grid_path_length(grid, (0, 0), (0, 0)) == 0 and grid_path_length(grid, (0, 3), (2, 4)) == 3
+    assert grid_path_length([".#.", ".#.", "..."], (0, 0), (0, 2)) == 6 and grid_path_length([".#", "#."], (0, 0), (1, 1)) == -1

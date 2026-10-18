@@ -1,6 +1,7 @@
 import pytest
 from ch21_arrays import (Array, ArraySet, count_occurrences, DynamicArray, find_all_indices, find_min_max,
-                         reverse_in_place, steps_table)
+                         first_repeat_in_place, longest_mountain, lowest_missing_positive, majority,
+                         missing_from_range, products_except_self, reverse_in_place, smallest_unmakeable, steps_table)
 
 
 def build(values, capacity=None):
@@ -148,3 +149,42 @@ def test_ex_21_19():
     for v in (1, 2, 3):
         d.insert_at_end(v)
     assert d.capacity == 4 and d.to_list() == [1, 2, 3]
+
+
+def test_ex_21_20():
+    assert majority([3, 1, 3, 3, 2, 3]) == 3 and majority([7]) == 7
+    assert majority([2, 2, 1]) == 2 and majority([1, 2, 1, 2, 1]) == 1 and majority([5, 9, 9]) == 9
+
+
+def test_ex_21_21():
+    assert products_except_self([2, 3, 4, 5]) == [60, 40, 30, 24]
+    assert products_except_self([1, 0, 3]) == [0, 3, 0] and products_except_self([0, 0]) == [0, 0] and products_except_self([5]) == [1]
+    assert products_except_self([-1, 2, -3]) == [-6, 3, -2]
+
+
+def test_ex_21_22():
+    assert longest_mountain([1, 3, 5, 4, 2, 2, 6, 1]) == 5
+    assert longest_mountain([1, 2, 3]) == 0 and longest_mountain([3, 2, 1]) == 0 and longest_mountain([]) == 0
+    assert longest_mountain([1, 3, 2, 4, 1]) == 3 and longest_mountain([1, 2, 1, 2, 3, 2, 1]) == 5 and longest_mountain([2, 2, 2]) == 0
+
+
+def test_ex_21_23():
+    assert smallest_unmakeable([2, 1, 6]) == 4 and smallest_unmakeable([1, 1, 3]) == 6
+    assert smallest_unmakeable([]) == 1 and smallest_unmakeable([2]) == 1 and smallest_unmakeable([1, 2, 4, 8]) == 16
+
+
+def test_ex_21_24():
+    assert lowest_missing_positive([4, -2, 1, 9, 2]) == 3 and lowest_missing_positive([2, 3]) == 1
+    assert lowest_missing_positive([1, 2, 3]) == 4 and lowest_missing_positive([]) == 1 and lowest_missing_positive([1, 1, 1]) == 2
+    assert lowest_missing_positive([0, -5, 3, 2, 1, 5]) == 4
+
+
+def test_ex_21_25():
+    assert missing_from_range([4, 1, 6], 6) == [2, 3, 5]
+    assert missing_from_range([], 3) == [1, 2, 3] and missing_from_range([2, 1], 2) == [] and missing_from_range([1], 1) == []
+
+
+def test_ex_21_26():
+    data = [3, 1, 4, 4, 1]
+    assert first_repeat_in_place(data) == 4 and data == [3, 1, 4, 4, 1]
+    assert first_repeat_in_place([1, 2, 3]) == -1 and first_repeat_in_place([2, 2]) == 2 and first_repeat_in_place([1, 3, 3, 1]) == 3

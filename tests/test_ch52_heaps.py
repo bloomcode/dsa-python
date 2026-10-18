@@ -1,5 +1,6 @@
 import random
-from ch52_heaps import DeadlineQueue, heap_sort, is_max_heap, MaxHeap, merge_k_sorted, top_k
+from ch52_heaps import (DeadlineQueue, heap_sort, is_max_heap, MaxHeap, merge_k_sorted, RunningMedian,
+                        sort_nearly_sorted, top_k)
 
 
 def test_ex_52_1():
@@ -53,3 +54,24 @@ def test_ex_52_7():
 def test_ex_52_8():
     assert merge_k_sorted([[1, 4, 7], [2, 5], [0, 9], []]) == [0, 1, 2, 4, 5, 7, 9]
     assert merge_k_sorted([]) == []
+
+
+def test_ex_52_9():
+    m = RunningMedian()
+    got = []
+    for x in (5, 15, 1, 3):
+        m.add(x)
+        got.append(m.median())
+    assert got == [5.0, 10.0, 5.0, 4.0]
+    stream, seen, m = [8, -2, 7, 7, 0, 11, 3, 3, -5, 20], [], RunningMedian()
+    for x in stream:
+        m.add(x)
+        seen.append(x)
+        s, n = sorted(seen), len(seen)
+        assert m.median() == (s[n // 2] if n % 2 else (s[n // 2 - 1] + s[n // 2]) / 2)
+
+
+def test_ex_52_10():
+    assert sort_nearly_sorted([3, 1, 2, 6, 4, 5, 9, 7, 8], 2) == list(range(1, 10)) and sort_nearly_sorted([], 3) == []
+    assert sort_nearly_sorted([2, 1, 4, 3], 1) == [1, 2, 3, 4] and sort_nearly_sorted([1, 2, 3], 0) == [1, 2, 3]
+    assert sort_nearly_sorted([5, 4, 3, 2, 1], 4) == [1, 2, 3, 4, 5] and sort_nearly_sorted([2, 2, 1], 2) == [1, 2, 2]

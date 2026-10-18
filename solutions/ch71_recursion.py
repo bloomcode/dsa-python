@@ -161,3 +161,12 @@ def dice_ways(dice, total):
 def subsets(items):
     raise NotImplementedError
 # ==== END
+
+
+# ==== EX 71.19 | Last one standing in a circle | Practice
+# PROMPT: `n` people sit in a circle in seats `1` to `n`. Counting from seat 1, every `k`-th person still seated leaves, and counting restarts from the next one. Write `last_standing(n, k)` that returns the seat of the last person left. Recurse on `n - 1`: after one person leaves, the survivor's position in the smaller circle shifts by `k`.
+# EXAMPLE: `5, 2` -> `3` (seats 2, 4, 1, 5 leave in that order)
+# BIGO: O(N) time and O(N) stack: each call removes one person and renumbers the circle so the next count starts at 0.
+def last_standing(n, k):
+    raise NotImplementedError
+# ==== END
