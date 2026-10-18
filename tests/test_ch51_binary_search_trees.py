@@ -1,6 +1,8 @@
 import random
-from ch51_binary_search_trees import (build_bst, count_nodes, delete, find_max, find_min, height, inorder, insert,
-                                      is_valid_bst, level_order, postorder, preorder, search, tree_sort, TreeNode)
+from ch51_binary_search_trees import (balanced_bst, bst_from_preorder, build_bst, closest_value, count_nodes, delete,
+                                      find_max, find_min, height, inorder, insert, is_valid_bst, kth_largest,
+                                      level_order, postorder, preorder, repair_swapped, search, successor, tree_sort,
+                                      TreeNode)
 
 
 def sample_tree():
@@ -78,3 +80,49 @@ def test_ex_51_9():
 
 def test_ex_51_10():
     assert count_nodes(sample_tree()) == 5 and count_nodes(None) == 0
+
+
+def test_ex_51_11():
+    root = grow([50, 25, 75, 10, 33])
+    assert [closest_value(root, t) for t in (30, 60, 29, 100, 0, 50)] == [33, 50, 25, 75, 10, 50]
+
+
+def test_ex_51_12():
+    root = balanced_bst([1, 2, 3, 4, 5, 6, 7])
+    assert (root.value, root.left.value, root.right.value) == (4, 2, 6) and height(root) == 3
+    ten = balanced_bst(list(range(10)))
+    assert inorder(ten) == list(range(10)) and height(ten) == 4 and balanced_bst([]) is None
+
+
+def test_ex_51_13():
+    root = grow([50, 25, 75, 10, 33])
+    assert [kth_largest(root, k) for k in range(1, 6)] == [75, 50, 33, 25, 10] and kth_largest(TreeNode(7), 1) == 7
+
+
+def test_ex_51_14():
+    values = [40, 20, 10, 30, 60, 70]
+    root = bst_from_preorder(values)
+    assert (root.value, root.left.value, root.left.left.value, root.left.right.value) == (40, 20, 10, 30)
+    assert root.right.value == 60 and root.right.left is None and root.right.right.value == 70
+    for values in ([40, 20, 10, 30, 60, 70], [5, 4, 3, 2, 1], [1, 2, 3], [8, 3, 1, 6, 4, 7, 10, 14, 13]):
+        root = bst_from_preorder(values)
+        assert preorder(root) == values and inorder(root) == sorted(values)
+    assert bst_from_preorder([]) is None
+
+
+def test_ex_51_15():
+    root = grow([50, 25, 75, 10, 33])
+    assert [successor(root, v) for v in (10, 25, 33, 50, 75)] == [25, 33, 50, 75, None]
+    assert successor(root, 40) == 50 and successor(root, 0) == 10 and successor(None, 3) is None
+
+
+def test_ex_51_16():
+    root = TreeNode(50, TreeNode(75, TreeNode(10), TreeNode(33)), TreeNode(25))
+    repair_swapped(root)
+    assert (root.left.value, root.right.value) == (25, 75) and is_valid_bst(root)
+    for a, b in [(10, 33), (50, 52), (10, 89), (61, 75)]:
+        root = grow([50, 25, 75, 61, 89, 52, 10, 33])
+        x, y = search(root, a), search(root, b)
+        x.value, y.value = b, a
+        repair_swapped(root)
+        assert inorder(root) == [10, 25, 33, 50, 52, 61, 75, 89] and is_valid_bst(root)

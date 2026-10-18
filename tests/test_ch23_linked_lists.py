@@ -1,5 +1,8 @@
 import pytest
-from ch23_linked_lists import DoublyLinkedList, LinkedList, LinkedQueue, merge_sorted_lists
+from ch23_linked_lists import (add_digit_lists, cycle_start_and_length, DoublyLinkedList, drop_sorted_duplicates,
+                               flatten, interleave_ends, is_palindrome_list, LinkedList, LinkedQueue, meeting_node,
+                               merge_sorted_lists, MultiNode, Node, partition_list, remove_kth_from_end,
+                               rotate_right, sort_list, swap_pairs)
 
 
 L = LinkedList.from_list
@@ -130,3 +133,104 @@ def test_ex_23_16():
     for v in (1, 2, 3):
         q.enqueue(v)
     assert q.dequeue() == 1 and q.read() == 2
+
+
+def test_ex_23_17():
+    lst = L([1, 2, 3, 4, 5])
+    assert remove_kth_from_end(lst, 2) == 4 and lst.to_list() == [1, 2, 3, 5]
+    assert remove_kth_from_end(lst, 4) == 1 and lst.to_list() == [2, 3, 5]
+    one = L([7])
+    assert remove_kth_from_end(one, 1) == 7 and one.to_list() == []
+
+
+def test_ex_23_18():
+    assert add_digit_lists(L([9, 4, 1]), L([3, 8])).to_list() == [2, 3, 2]
+    assert add_digit_lists(L([9, 9]), L([1])).to_list() == [0, 0, 1] and add_digit_lists(L([]), L([])).to_list() == []
+    assert add_digit_lists(L([0]), L([0])).to_list() == [0] and add_digit_lists(L([5]), L([])).to_list() == [5]
+
+
+def test_ex_23_19():
+    shared = L([8, 9]).head
+    a, b = LinkedList(Node(1, Node(2, shared))), LinkedList(Node(5, shared))
+    assert meeting_node(a, b) is shared and meeting_node(b, a) is shared
+    assert meeting_node(L([1, 2]), L([3])) is None and meeting_node(a, a) is a.head and meeting_node(L([]), b) is None
+
+
+def test_ex_23_20():
+    lst = L([1, 2, 3, 2, 1])
+    assert is_palindrome_list(lst) and lst.to_list() == [1, 2, 3, 2, 1]
+    lst = L([1, 2, 3, 1])
+    assert not is_palindrome_list(lst) and lst.to_list() == [1, 2, 3, 1]
+    assert is_palindrome_list(L([1, 2, 2, 1])) and not is_palindrome_list(L([1, 2])) and is_palindrome_list(L([])) and is_palindrome_list(L([4]))
+
+
+def test_ex_23_21():
+    for k, want in [(2, [4, 5, 1, 2, 3]), (7, [4, 5, 1, 2, 3]), (0, [1, 2, 3, 4, 5]), (5, [1, 2, 3, 4, 5]), (1, [5, 1, 2, 3, 4])]:
+        lst = L([1, 2, 3, 4, 5])
+        rotate_right(lst, k)
+        assert lst.to_list() == want
+    empty = L([])
+    rotate_right(empty, 3)
+    assert empty.to_list() == []
+
+
+def test_ex_23_22():
+    for values, want in [([1, 2, 3, 4, 5], [1, 5, 2, 4, 3]), ([1, 2, 3, 4], [1, 4, 2, 3]), ([1, 2], [1, 2]), ([1], [1]), ([], [])]:
+        lst = L(values)
+        interleave_ends(lst)
+        assert lst.to_list() == want
+
+
+def test_ex_23_23():
+    lst = L([1, 2, 3, 4, 5])
+    first = lst.head
+    swap_pairs(lst)
+    assert lst.to_list() == [2, 1, 4, 3, 5] and lst.head.next is first
+    for values, want in [([], []), ([1], [1]), ([1, 2], [2, 1]), ([1, 2, 3, 4], [2, 1, 4, 3])]:
+        lst = L(values)
+        swap_pairs(lst)
+        assert lst.to_list() == want
+
+
+def test_ex_23_24():
+    lst = L([3, 1, 2])
+    three = lst.head
+    sort_list(lst)
+    assert lst.to_list() == [1, 2, 3] and lst.head.next.next is three
+    for values in ([5, 1, 4, 2, 3, 1], [], [2, 1], [7], [4, 4, 1, 9, 0, 3, 8]):
+        lst = L(values)
+        sort_list(lst)
+        assert lst.to_list() == sorted(values)
+
+
+def test_ex_23_25():
+    for values, want in [([1, 1, 2, 3, 3, 3], [1, 2, 3]), ([], []), ([4, 4], [4]), ([1, 2], [1, 2]), ([0, 0, 0, 5], [0, 5])]:
+        lst = L(values)
+        drop_sorted_duplicates(lst)
+        assert lst.to_list() == want
+
+
+def test_ex_23_26():
+    for values, x, want in [([4, 1, 6, 2, 5, 2], 4, [1, 2, 2, 4, 6, 5]), ([3, 1], 0, [3, 1]), ([], 5, []), ([5, 6, 1], 9, [5, 6, 1]), ([9, 2, 8, 1], 5, [2, 1, 9, 8])]:
+        lst = L(values)
+        partition_list(lst, x)
+        assert lst.to_list() == want
+
+
+def test_ex_23_27():
+    n = {v: MultiNode(v) for v in range(1, 9)}
+    n[1].next, n[2].next, n[3].next, n[5].next = n[2], n[3], n[4], n[6]
+    n[2].child, n[5].child, n[4].child = n[5], n[7], n[8]
+    values, node = [], flatten(n[1])
+    while node:
+        assert node.child is None
+        values.append(node.data)
+        node = node.next
+    assert values == [1, 2, 5, 7, 6, 3, 4, 8] and flatten(None) is None
+
+
+def test_ex_23_28():
+    assert cycle_start_and_length(lambda x: (x * x + 1) % 11, 0) == [4, 2]
+    assert cycle_start_and_length(lambda x: (x + 1) % 5, 0) == [0, 5] and cycle_start_and_length(lambda x: x // 2, 20) == [5, 1]
+    digit_squares = lambda x: sum(int(d) ** 2 for d in str(x))
+    assert cycle_start_and_length(digit_squares, 7) == [5, 1] and cycle_start_and_length(digit_squares, 4) == [0, 8]

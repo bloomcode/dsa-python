@@ -103,3 +103,29 @@ def is_max_heap(arr):
 def merge_k_sorted(lists):
     raise NotImplementedError
 # ==== END
+
+
+# ==== EX 52.9 | Running median | Practice | class=RunningMedian
+# PROMPT: Build `RunningMedian` with `add(x)` and `median()` (a float; at least one value has been added). Keep the lower half in a max-heap (store negatives with `heapq`) and the upper half in a min-heap, rebalancing so the lower half has the same size or one more.
+# EXAMPLE: add 5 -> `5.0`; add 15 -> `10.0`; add 1 -> `5.0`; add 3 -> `4.0`
+# BIGO: O(log N) per `add`, O(1) per `median`, O(N) space: a max-heap holds the lower half and a min-heap the upper half, and their tops straddle the median.
+class RunningMedian:
+    def __init__(self):
+        raise NotImplementedError
+
+    def add(self, x):
+        raise NotImplementedError
+
+    def median(self):
+        raise NotImplementedError
+# ==== END
+
+
+# ==== EX 52.10 | Sort a nearly sorted array with a heap | Practice
+# PROMPT: Every value in `nums` is at most `k` positions from where it belongs in sorted order. Write `sort_nearly_sorted(nums, k)` that returns a new sorted list in O(N log K): keep a min-heap of the next `k + 1` values and repeatedly move its smallest to the output.
+# EXAMPLE: `[3, 1, 2, 6, 4, 5, 9, 7, 8], 2` -> `[1, 2, 3, 4, 5, 6, 7, 8, 9]`
+# BIGO: O(N log K) time, O(K) space: the smallest remaining value is always among the next K + 1, so a heap of that size can hand it out.
+# NOTE: Compare 31.16, which handles the same input with insertion sort in O(N * K).
+def sort_nearly_sorted(nums, k):
+    raise NotImplementedError
+# ==== END

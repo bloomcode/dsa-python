@@ -183,3 +183,118 @@ class LinkedQueue:
     def read(self):
         raise NotImplementedError
 # ==== END
+
+
+# ==== EX 23.17 | Remove the k-th node from the end | Core
+# PROMPT: Write `remove_kth_from_end(lst, k)` that unlinks the `k`-th node from the end of a `LinkedList` (`1 <= k <= len`) in one pass and returns its value: move a lead pointer `k` steps ahead of a trailing one, then move both until the lead reaches the last node. A placeholder node in front handles removing the head.
+# EXAMPLE: `[1, 2, 3, 4, 5], 2` -> returns `4`; the list is `[1, 2, 3, 5]`
+# BIGO: O(N) time, O(1) space, one pass: a lead pointer k nodes ahead reaches the end exactly when the trailing pointer sits before the node to remove.
+def remove_kth_from_end(lst, k):
+    raise NotImplementedError
+# ==== END
+
+
+# ==== EX 23.18 | Add numbers stored as lists | Practice
+# PROMPT: Each `LinkedList` holds the digits of a non-negative number, least significant first (`[9, 4, 1]` is 149). Write `add_digit_lists(a, b)` that returns a new `LinkedList` holding the digits of the sum in the same order, walking both lists once with a carry.
+# EXAMPLE: `[9, 4, 1]`, `[3, 8]` -> `[2, 3, 2]` (149 + 83 = 232)
+# BIGO: O(N + M) time and O(max(N, M)) space for the result: one walk down both lists with a carry, like adding on paper.
+def add_digit_lists(a, b):
+    raise NotImplementedError
+# ==== END
+
+
+# ==== EX 23.19 | Where two lists meet | Practice
+# PROMPT: Two `LinkedList`s may share their tail nodes. Write `meeting_node(a, b)` that returns the first node they share (the same object), or `None`, with O(1) extra space: walk one pointer down each list, and when a pointer runs off the end, restart it at the head of the other list.
+# EXAMPLE: `[1, 2]` then shared `[8, 9]`, and `[5]` then the same `[8, 9]` -> the node holding `8`
+# BIGO: O(N + M) time, O(1) space: after switching lists once, both pointers have walked the same distance when they reach the shared part.
+def meeting_node(a, b):
+    raise NotImplementedError
+# ==== END
+
+
+# ==== EX 23.20 | Palindrome list | Practice
+# PROMPT: Write `is_palindrome_list(lst)`: `True` when the values of a `LinkedList` read the same both ways, using O(1) extra space. Find the middle, reverse the second half, compare the halves, and reverse the second half again so the list ends up unchanged.
+# EXAMPLE: `[1, 2, 3, 2, 1]` -> `True`; `[1, 2]` -> `False`
+# BIGO: O(N) time, O(1) space: find the middle with slow and fast pointers, reverse the second half to compare, then reverse it back.
+def is_palindrome_list(lst):
+    raise NotImplementedError
+# ==== END
+
+
+# ==== EX 23.21 | Rotate a list by k | Core
+# PROMPT: Write `rotate_right(lst, k)` that rotates a `LinkedList` right by `k` places in place: the last `k` nodes move to the front in order. `k` may exceed the length. Find the length and tail, close the ring, and cut it before the new head.
+# EXAMPLE: `[1, 2, 3, 4, 5], 2` -> `[4, 5, 1, 2, 3]`
+# BIGO: O(N) time, O(1) space: one walk finds the length and tail, a second finds the new tail; three link changes do the rest.
+def rotate_right(lst, k):
+    raise NotImplementedError
+# ==== END
+
+
+# ==== EX 23.22 | Interleave with the reversed second half | Stretch
+# PROMPT: Write `interleave_ends(lst)` that reorders a `LinkedList` in place to first, last, second, second-to-last, and so on, by relinking nodes: cut the list at its middle, reverse the second half, then alternate nodes from the two halves.
+# EXAMPLE: `[1, 2, 3, 4, 5]` -> `[1, 5, 2, 4, 3]`; `[1, 2, 3, 4]` -> `[1, 4, 2, 3]`
+# BIGO: O(N) time, O(1) space: split at the middle, reverse the second half, then zip the two halves together by relinking.
+def interleave_ends(lst):
+    raise NotImplementedError
+# ==== END
+
+
+# ==== EX 23.23 | Swap adjacent pairs | Practice
+# PROMPT: Write `swap_pairs(lst)` that swaps every two neighbouring nodes of a `LinkedList` in place by relinking them (not by swapping values); an odd last node stays put.
+# EXAMPLE: `[1, 2, 3, 4, 5]` -> `[2, 1, 4, 3, 5]`
+# BIGO: O(N) time, O(1) space: each pair needs three link changes, and a placeholder node in front makes the first pair like the rest.
+def swap_pairs(lst):
+    raise NotImplementedError
+# ==== END
+
+
+# ==== EX 23.24 | Mergesort a linked list | Stretch
+# PROMPT: Write `sort_list(lst)` that sorts a `LinkedList` in place by relinking its nodes, in O(N log N): split the chain at its middle with slow and fast pointers, sort each half recursively, and merge the two sorted chains (equal values keep their order).
+# EXAMPLE: `[5, 1, 4, 2, 3, 1]` -> `[1, 1, 2, 3, 4, 5]`
+# BIGO: O(N log N) time, O(log N) stack: splitting at the middle costs a walk, and merging relinks nodes, so no buffer is needed.
+# NOTE: Mergesort suits linked lists better than arrays: the merge needs no extra array, and nothing needs random access.
+def sort_list(lst):
+    raise NotImplementedError
+# ==== END
+
+
+# ==== EX 23.25 | Drop duplicates from a sorted list | Core
+# PROMPT: Write `drop_sorted_duplicates(lst)` that unlinks repeated values from a sorted `LinkedList` in place, keeping the first node of each value.
+# EXAMPLE: `[1, 1, 2, 3, 3, 3]` -> `[1, 2, 3]`
+# BIGO: O(N) time, O(1) space: in a sorted list every copy of a value sits next to the first one, so each node is compared once with its successor.
+def drop_sorted_duplicates(lst):
+    raise NotImplementedError
+# ==== END
+
+
+# ==== EX 23.26 | Partition a list around a value | Practice
+# PROMPT: Write `partition_list(lst, x)` that relinks a `LinkedList` in place so every node below `x` comes before every node at or above `x`, keeping the original order within each group. Build two chains behind two placeholder nodes, then join them.
+# EXAMPLE: `[4, 1, 6, 2, 5, 2], 4` -> `[1, 2, 2, 4, 6, 5]`
+# BIGO: O(N) time, O(1) space: nodes are relinked onto two chains, which are then joined.
+def partition_list(lst, x):
+    raise NotImplementedError
+# ==== END
+
+
+# ==== EX 23.27 | Flatten a multilevel list | Stretch
+# PROMPT: Create `MultiNode(data, next_node=None, child=None)`: a node whose `child` may start another list, which may have children of its own. Write `flatten(head)` that relinks everything into one list through `next`, in place, with each child list inserted right after its parent and before the parent's old `next`; set every `child` to `None` and return `head`. Save pending `next` nodes on a stack.
+# EXAMPLE: `1-2-3-4`, `2` has child `5-6`, `5` has child `7`, `4` has child `8` -> `[1, 2, 5, 7, 6, 3, 4, 8]`
+# BIGO: O(N) time, O(D) space for nesting depth D: each node is visited once, and the stack holds one saved `next` per open level.
+class MultiNode:
+    def __init__(self, data, next_node=None, child=None):
+        raise NotImplementedError
+
+
+def flatten(head):
+    raise NotImplementedError
+# ==== END
+
+
+# ==== EX 23.28 | Cycle in a number sequence | Practice
+# PROMPT: Repeatedly applying `step` to `x0` gives a sequence that must eventually repeat. Write `cycle_start_and_length(step, x0)` that returns `[mu, length]`: the index where the cycle starts and its length, in O(1) space. Use a slow and a fast walker like a linked-list cycle check, then walk again from `x0` to find the entry.
+# EXAMPLE: `step = lambda x: (x * x + 1) % 11`, `x0 = 0` (sequence `0, 1, 2, 5, 4, 6, 4, ...`) -> `[4, 2]`
+# BIGO: O(mu + lambda) steps and O(1) space: the slow and fast walkers meet inside the cycle, and a second walk from the start meets the first at the cycle's entry.
+# NOTE: The same walk decides whether repeated sums of squared digits ever reach 1: the sequence either settles at 1 or loops.
+def cycle_start_and_length(step, x0):
+    raise NotImplementedError
+# ==== END

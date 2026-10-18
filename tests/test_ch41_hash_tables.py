@@ -1,6 +1,8 @@
 import pytest
-from ch41_hash_tables import (can_build, distinct_per_day, group_anagrams, HashTable, in_exactly_one, invert,
-                              most_common_word, positions, same_pattern, two_sum_indices, word_counts)
+from ch41_hash_tables import (can_build, count_sum_runs, disjoint, distinct_per_day, group_anagrams,
+                              has_zero_sum_run, HashTable, in_exactly_one, invert, longest_consecutive,
+                              most_common_word, most_on_a_line, positions, same_pattern, symmetric_pairs,
+                              trace_journey, two_sum_indices, word_counts)
 
 
 def test_ex_41_1():
@@ -58,3 +60,40 @@ def test_ex_41_9():
 
 def test_ex_41_10():
     assert invert({'fries': 2, 'soda': 2, 'burger': 5}) == {2: ['fries', 'soda'], 5: ['burger']}
+
+
+def test_ex_41_11():
+    assert longest_consecutive([10, 4, 20, 1, 3, 2, 11]) == 4 and longest_consecutive([]) == 0
+    assert longest_consecutive([5, 5, 5]) == 1 and longest_consecutive([0, -1, 1, 9, 8]) == 3
+
+
+def test_ex_41_12():
+    assert has_zero_sum_run([4, 2, -3, 1, 6]) and not has_zero_sum_run([4, 2, 1]) and has_zero_sum_run([0])
+    assert not has_zero_sum_run([]) and has_zero_sum_run([1, -1]) and has_zero_sum_run([3, 5, -8, 2]) and not has_zero_sum_run([-2, 5])
+
+
+def test_ex_41_13():
+    assert count_sum_runs([1, 2, 3, -2, 2], 3) == 4 and count_sum_runs([1, 1, 1], 2) == 2 and count_sum_runs([], 0) == 0
+    assert count_sum_runs([0, 0], 0) == 3 and count_sum_runs([5], -5) == 0 and count_sum_runs([2, -2, 2], 2) == 3
+
+
+def test_ex_41_14():
+    assert symmetric_pairs([[1, 2], [3, 4], [5, 6], [4, 3], [2, 1]]) == [[3, 4], [1, 2]] and symmetric_pairs([]) == []
+    assert symmetric_pairs([[1, 2], [2, 3]]) == [] and symmetric_pairs([[7, 8], [8, 7], [9, 7], [7, 9]]) == [[7, 8], [9, 7]]
+
+
+def test_ex_41_15():
+    assert trace_journey([["MAA", "BOM"], ["DEL", "MAA"], ["BOM", "GOI"]]) == ["DEL", "MAA", "BOM", "GOI"]
+    assert trace_journey([]) == [] and trace_journey([["A", "B"]]) == ["A", "B"]
+    assert trace_journey([["C", "D"], ["B", "C"], ["D", "E"], ["A", "B"]]) == ["A", "B", "C", "D", "E"]
+
+
+def test_ex_41_16():
+    assert disjoint([1, 5, 9], [2, 6]) and not disjoint([1, 5], [5]) and disjoint([], [1])
+    assert disjoint([], []) and not disjoint([3, 3], [4, 3])
+
+
+def test_ex_41_17():
+    assert most_on_a_line([[0, 0], [1, 1], [2, 2], [3, 1], [0, 3]]) == 3 and most_on_a_line([]) == 0 and most_on_a_line([[1, 1]]) == 1
+    assert most_on_a_line([[1, 1], [1, 1], [2, 3]]) == 3 and most_on_a_line([[2, 0], [2, 5], [2, -1], [3, 3]]) == 3
+    assert most_on_a_line([[0, 0], [2, 1], [4, 2], [6, 3], [1, 0]]) == 4 and most_on_a_line([[0, 0], [-2, 1], [2, -1]]) == 3
